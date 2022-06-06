@@ -1,4 +1,4 @@
-package test;
+package testBIO;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,12 +9,12 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import page.PastebinPage;
-import page.ResultPage;
-import testBIO.ConfPropertiesBIO;
+import pageBIO.ResultPageBIO;
+
+import pageBIO.PastebinPageBIO;
 
 
-public class PastebinTest {
+public class PastebinTestBIO {
     public static WebDriver driver;
 
 
@@ -37,7 +37,7 @@ public class PastebinTest {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@type='submit']")));
 
-        PastebinPage pasteBin = new PastebinPage(driver);
+        PastebinPageBIO pasteBin = new PastebinPageBIO(driver);
 
         pasteBin.pasteCode(ConfPropertiesBIO.getProperty("pasteCodeValue"));
         pasteBin.openDropdown();
@@ -48,7 +48,7 @@ public class PastebinTest {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='de1']")));
 
-        ResultPage resultCheck = new ResultPage(driver);
+        ResultPageBIO resultCheck = new ResultPageBIO(driver);
 
         Assert.assertTrue(resultCheck.pastedCodeText()
                 .contains(ConfPropertiesBIO.getProperty("pasteCodeValue")), "Pasted and saved data is different!");

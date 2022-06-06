@@ -1,4 +1,4 @@
-package test;
+package testBIO;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,12 +9,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import page.PastebinPage;
-import page.ResultPage;
-import testBIO.ConfPropertiesBIO;
+import pageBIO.ResultPageBIO;
+import pageBIO.PastebinPageBIO;
 
 
-public class PastebinTest {
+public class PastebinSyntaxTest {
     public static WebDriver driver;
 
 
@@ -26,10 +25,12 @@ public class PastebinTest {
     }
 
     @Test
-    public void pastebinTest () {
+    public void pastebinSyntaxTest () {
 
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("postform-text")));
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("select2-postform-format-container")));
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("select2-postform-expiration-container")));
         new WebDriverWait(driver, 10)
@@ -37,21 +38,26 @@ public class PastebinTest {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@type='submit']")));
 
-        PastebinPage pasteBin = new PastebinPage(driver);
+        PastebinPageBIO pasteBin = new PastebinPageBIO(driver);
 
         pasteBin.pasteCode(ConfPropertiesBIO.getProperty("pasteCodeValue"));
+        pasteBin.openStyleDropDown();
+        pasteBin.selectSyntaxHighlightOption("syntaxHighlight");
         pasteBin.openDropdown();
         pasteBin.selectExpirationTime(ConfPropertiesBIO.getProperty("pasteExpirationValue"));
         pasteBin.pasteNameInput(ConfPropertiesBIO.getProperty("pasteNameValue"));
         pasteBin.submitPaste();
 
         new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='Bash'")));
+        new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='de1']")));
 
-        ResultPage resultCheck = new ResultPage(driver);
+
+        ResultPageBIO resultCheck = new ResultPageBIO(driver);
 
         Assert.assertTrue(resultCheck.pastedCodeText()
-                .contains(ConfPropertiesBIO.getProperty("pasteCodeValue")), "Pasted and saved data is different!");
+                .contains(ConfPropertiesBIO.getProperty("pasteCodeValue")), "Paste text matches input!");
 
     }
     @AfterClass
