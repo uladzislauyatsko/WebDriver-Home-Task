@@ -9,11 +9,10 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pageBIO.ResultPageBIO;
 import pageBIO.PastebinPageBIO;
+import pageBIO.ResultPageBIO;
 
-
-public class PastebinSyntaxTest {
+public class PastebinTitleTestBIO {
     public static WebDriver driver;
 
 
@@ -25,7 +24,7 @@ public class PastebinSyntaxTest {
     }
 
     @Test
-    public void pastebinSyntaxTest () {
+    public void pastebinTest () {
 
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("postform-text")));
@@ -53,9 +52,8 @@ public class PastebinSyntaxTest {
 
 
         ResultPageBIO resultCheck = new ResultPageBIO(driver);
-
-        Assert.assertTrue(resultCheck.pastedCodeText()
-                .contains(ConfPropertiesBIO.getProperty("pasteCodeValue")), "Paste text is different!");
+        String title = resultCheck.getPageTitle();
+        Assert.assertEquals(title, "how to gain dominance among developers - Pastebin.com");
 
     }
     @AfterClass

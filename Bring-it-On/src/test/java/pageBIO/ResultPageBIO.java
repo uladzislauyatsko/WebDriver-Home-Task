@@ -20,4 +20,5 @@ public class ResultPageBIO {
     public String pastedCodeText() {
         return pastedCodeField.getText();
     }
+    public String getPageTitle() {return driver.getTitle();}
 }

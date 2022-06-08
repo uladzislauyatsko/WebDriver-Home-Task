@@ -13,6 +13,9 @@ import pageBIO.ResultPageBIO;
 
 import pageBIO.PastebinPageBIO;
 
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
 
 public class PastebinTestBIO {
     public static WebDriver driver;
@@ -49,9 +52,17 @@ public class PastebinTestBIO {
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='de1']")));
 
         ResultPageBIO resultCheck = new ResultPageBIO(driver);
-
-        Assert.assertTrue(resultCheck.pastedCodeText()
-                .contains(ConfPropertiesBIO.getProperty("pasteCodeValue")), "Pasted and saved data is different!");
+        StringTokenizer stringTokenizer = new StringTokenizer(ConfPropertiesBIO.getProperty("pasteCodeValue")," \n");
+        StringTokenizer secondTokenizer = new StringTokenizer(resultCheck.pastedCodeText(), " \n");
+        ArrayList<String> baseStringArray = new ArrayList<>();
+        ArrayList<String> stringToCompare = new ArrayList<>();
+        while(stringTokenizer.hasMoreTokens()) {
+            baseStringArray.add(stringTokenizer.nextToken());
+        }
+        while(secondTokenizer.hasMoreTokens()){
+            stringToCompare.add(secondTokenizer.nextToken());
+        }
+        Assert.assertEquals(baseStringArray, stringToCompare, "Pasted and saved data is different!");
 
     }
     @AfterClass
