@@ -16,19 +16,23 @@ public class CalculatorPage {
     WebElement instanceQuantity;
 
     @FindBy (id = "select_98")
+    WebElement operatingSystemDropdown;
+
+    @FindBy (xpath = "////li[text()[contains(.,'Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)')]]")
     WebElement operatingSystem;
 
     @FindBy (id = "select_102")
-    WebElement virtualMachineType;
+    WebElement virtualMachineTypeDropdown;
 
     @FindBy (id = "select_112")
-    WebElement machineType;
+    WebElement machineTypeDropdown;
 
     @FindBy (id = "select_110")
-    WebElement seriesType;
+    WebElement seriesTypeDropdown;
 
-    @FindBy
-    WebElement
+    public void setInstanceQuantity () {
+        instanceQuantity.sendKeys("4");
+    }
 
 
 }
